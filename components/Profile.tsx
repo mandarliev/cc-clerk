@@ -1,9 +1,19 @@
 "use client";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 function Profile() {
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
-  return <div>This has info about the user profile</div>;
+  const { getToken, isLoaded, sessionId, userId } = useAuth();
+  const { isSignedIn, user } = useUser();
+
+  if (!isLoaded || !userId) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      CLIENT COMPONENT: This has info about the user profile (user id: {userId})
+    </div>
+  );
 }
 
 export default Profile;
